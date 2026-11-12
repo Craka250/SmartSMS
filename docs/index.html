@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10243b">
+  <title>SmartSMS — Pause before you reply</title>
+  <meta name="description" content="Check text messages for spam signals and risky requests for personal information with SmartSMS.">
+  <link rel="canonical" href="https://craka250.github.io/SmartSMS/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SmartSMS">
+  <meta property="og:title" content="SmartSMS — Pause before you reply">
+  <meta property="og:description" content="Check text messages for spam signals and risky requests for personal information.">
+  <meta property="og:url" content="https://craka250.github.io/SmartSMS/">
+  <meta property="og:image" content="https://craka250.github.io/SmartSMS/share-preview.png">
+  <meta property="og:image:secure_url" content="https://craka250.github.io/SmartSMS/share-preview.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="SmartSMS message safety preview: Pause before you reply.">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SmartSMS — Pause before you reply">
+  <meta name="twitter:description" content="Check texts for spam signals and risky requests for personal information.">
+  <meta name="twitter:image" content="https://craka250.github.io/SmartSMS/share-preview.png">
+  <meta name="twitter:image:alt" content="SmartSMS message safety preview: Pause before you reply.">
+
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+      background: #f3f7fa;
+      color: #17283e;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+      background:
+        radial-gradient(ellipse at 82% 5%, rgba(52, 180, 161, .14), transparent 34rem),
+        radial-gradient(ellipse at 6% 75%, rgba(89, 134, 220, .10), transparent 30rem),
+        #f3f7fa;
+    }
+
+    .card {
+      width: min(100%, 980px);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 30px;
+      background: #10243b;
+      box-shadow: 0 28px 90px rgba(19, 51, 74, .20);
+      animation: arrive .65s ease-out both;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 430px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      align-items: center;
+      gap: 42px;
+      overflow: hidden;
+      padding: clamp(32px, 7vw, 76px);
+      color: #f7fbff;
+      background:
+        radial-gradient(circle at 85% 13%, rgba(87, 226, 201, .23), transparent 22rem),
+        linear-gradient(118deg, #10243b 0%, #173c55 58%, #155a61 100%);
+    }
+
+    .hero::before, .hero::after {
+      position: absolute;
+      z-index: 0;
+      right: -80px;
+      bottom: -240px;
+      width: 440px;
+      height: 440px;
+      border: 1px solid rgba(167, 244, 224, .16);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+
+    .hero::after {
+      right: 80px;
+      bottom: -200px;
+      width: 340px;
+      height: 340px;
+      animation-delay: -5s;
+    }
+
+    .copy, .mark { position: relative; z-index: 1; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 48px;
+      color: #b6f4e3;
+      font-size: .88rem;
+      font-weight: 750;
+      letter-spacing: .14em;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(202, 255, 242, .28);
+      border-radius: 14px;
+      background: rgba(224, 255, 248, .08);
+    }
+
+    .brand-icon svg { width: 26px; height: 26px; }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: #a7f4e0;
+      font-size: .75rem;
+      font-weight: 750;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 650px;
+      margin: 0;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight: 760;
+      letter-spacing: -.06em;
+      line-height: .98;
+    }
+
+    .description {
+      max-width: 560px;
+      margin: 24px 0 0;
+      color: #d3e2ed;
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      line-height: 1.7;
+    }
+
+    .mark {
+      width: 220px;
+      height: 220px;
+      display: grid;
+      place-items: center;
+      justify-self: center;
+      border: 1px solid rgba(202, 255, 242, .28);
+      border-radius: 54px;
+      background: rgba(224, 255, 248, .08);
+      box-shadow: inset 0 1px rgba(255, 255, 255, .12), 0 18px 45px rgba(1, 21, 33, .22);
+      backdrop-filter: blur(8px);
+      transform: rotate(4deg);
+      animation: bob 5s ease-in-out infinite;
+    }
+
+    .mark svg { width: 110px; height: 110px; }
+
+    .action {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+      padding: 24px clamp(32px, 7vw, 76px);
+      background: #fff;
+    }
+
+    .open-app {
+      display: inline-flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 22px;
+      border-radius: 13px;
+      background: #137e79;
+      color: #fff;
+      font-size: .98rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .open-app:hover {
+      transform: translateY(-2px);
+      background: #106e6a;
+      box-shadow: 0 9px 22px rgba(23, 60, 85, .2);
+    }
+
+    .open-app:focus-visible {
+      outline: 3px solid #53c9b0;
+      outline-offset: 3px;
+    }
+
+    .note {
+      margin: 0;
+      color: #526579;
+      font-size: .9rem;
+      line-height: 1.55;
+    }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes drift {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-12px, -10px); }
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0) rotate(4deg); }
+      50% { transform: translateY(-7px) rotate(1deg); }
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 14px; }
+      .card { border-radius: 23px; }
+      .hero {
+        min-height: 0;
+        grid-template-columns: minmax(0, 1fr) 64px;
+        align-items: start;
+        gap: 12px;
+        padding: 30px 24px 38px;
+      }
+      .brand { margin-bottom: 40px; }
+      h1 { font-size: clamp(2.4rem, 10vw, 3.5rem); }
+      .mark {
+        width: 62px;
+        height: 62px;
+        border-radius: 18px;
+      }
+      .mark svg { width: 38px; height: 38px; }
+      .action { align-items: flex-start; flex-direction: column; padding: 22px 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="copy">
+        <div class="brand">
+          <span class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M16 3 26 7v7.5c0 6.5-4.1 11.6-10 14.5C10.1 26.1 6 21 6 14.5V7l10-4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M12 14h8v6h-8zM13 14v-2a3 3 0 1 1 6 0v2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span>SMARTSMS</span>
+        </div>
+        <p class="eyebrow">A clearer view of your messages</p>
+        <h1 id="page-title">Pause before you reply.</h1>
+        <p class="description">Check a text for spam signals and risky requests for personal information.</p>
+      </div>
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 6 52 14v15c0 13-8.3 23.2-20 29C20.3 52.2 12 42 12 29V14L32 6Z" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/>
+          <path d="M23 29h18a4 4 0 0 1 4 4v9H19v-9a4 4 0 0 1 4-4Z" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/>
+          <path d="M25 29v-5a7 7 0 0 1 14 0v5" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="32" cy="36" r="2" fill="currentColor"/>
+        </svg>
+      </div>
+    </section>
+    <section class="action" aria-label="Open SmartSMS">
+      <a class="open-app" href="https://smartsms-bfjqwjk48v5hxvcfmyecgb.streamlit.app/" target="_blank" rel="noopener noreferrer">
+        Open SmartSMS <span aria-hidden="true">↗</span>
+      </a>
+      <p class="note">A quick second look at suspicious texts.<br>Never share a PIN, password or one-time code by message.</p>
+    </section>
+  </main>
+</body>
+</html>

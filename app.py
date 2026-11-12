@@ -526,7 +526,7 @@ with st.sidebar:
 
     st.write(
         "SmartSMS checks message patterns and screens for requests "
-        "for passwords, PINs, and one-time codes."
+        "for passwords, PINs and one-time codes."
     )
 
     st.divider()
@@ -534,7 +534,7 @@ with st.sidebar:
     st.markdown("### :material/tips_and_updates: Stay safer")
 
     st.caption(
-        "Never share a PIN, password, or one-time code in response "
+        "Never share a PIN, password or one-time code in response "
         "to a message. If unsure, contact the organization using "
         "a trusted number."
     )
@@ -903,7 +903,7 @@ if result:
 
         st.write(
             "SmartSMS combines message screening with credential-safety "
-            "checks. A suspicious request for a PIN, password, or "
+            "checks. A suspicious request for a PIN, password or "
             "one-time code can raise the risk indicator regardless of "
             "the classifier score. This indicator is not a verified "
             "probability of fraud."
