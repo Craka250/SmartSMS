@@ -499,41 +499,51 @@ if analyze_clicked:
             spam_probability = float(probabilities[spam_index])
 
             ham_probability = float(probabilities[ham_index])
-
+            
             # Additional credential security screening.
             security_warning = detect_credential_risk(current_message)
 
+            # Preserve the actual machine-learning probabilities.
+            ml_spam_probability = spam_probability
+            ml_ham_probability = ham_probability
+
             if security_warning:
-
                 prediction = "spam"
-
                 detection_method = "Security rule"
 
+                # The system has identified a high-risk credential request.
+                # This is a rule-based risk indicator, NOT an ML probability.
+                system_spam_score = 0.99
+                system_ham_score = 0.01
+
             elif spam_probability >= spam_threshold:
-
                 prediction = "spam"
-
                 detection_method = "Machine learning"
+
+                system_spam_score = spam_probability
+                system_ham_score = ham_probability
 
             else:
-
                 prediction = "ham"
-
                 detection_method = "Machine learning"
+
+                system_spam_score = spam_probability
+                system_ham_score = ham_probability
 
             # Save the analysis for display.
             st.session_state.analysis_result = {
-
                 "message": current_message,
-
                 "prediction": prediction,
 
-                "spam_probability": spam_probability,
+                # Overall system risk assessment.
+                "spam_probability": system_spam_score,
+                "ham_probability": system_ham_score,
 
-                "ham_probability": ham_probability,
+                # Original machine-learning output.
+                "ml_spam_probability": ml_spam_probability,
+                "ml_ham_probability": ml_ham_probability,
 
                 "security_warning": security_warning,
-
                 "detection_method": detection_method
             }
 
@@ -641,31 +651,29 @@ if result:
             "the sender is genuine or that the message is safe."
         )
 
-
     # --------------------------------------------------------
-    # MODEL PROBABILITY
+    # SYSTEM RISK ASSESSMENT
     # --------------------------------------------------------
 
-    st.markdown("### :material/bar_chart: Model Probability")
+    st.markdown("### :material/bar_chart: System Risk Assessment")
 
     metric_one, metric_two = st.columns(2)
 
+    # Use one shared system score for all displayed indicators.
+    system_spam_score = result["spam_probability"]
+    system_ham_score = result["ham_probability"]
 
     with metric_one:
-
         st.metric(
-            "Spam score",
-            f"{result['spam_probability'] * 100:.2f}%"
+            "Spam risk score",
+            f"{system_spam_score * 100:.2f}%"
         )
-
 
     with metric_two:
-
         st.metric(
             "Legitimate score",
-            f"{result['ham_probability'] * 100:.2f}%"
+            f"{system_ham_score * 100:.2f}%"
         )
-
 
     st.caption(
         f"Detection method: {detection_method}"
@@ -675,14 +683,19 @@ if result:
         f"ML spam threshold: {spam_threshold:.2f}"
     )
 
+    # Progress bar uses exactly the same score as the metric.
     st.progress(
-        max(
-            0.0,
-            min(1.0, result["spam_probability"])
-        ),
-        text="Estimated ML spam probability"
+        max(0.0, min(1.0, system_spam_score)),
+        text="Estimated system spam risk indicator"
     )
 
+    # Display the actual machine-learning probabilities separately.
+    st.caption(
+        f"Original ML spam score: "
+        f"{result['ml_spam_probability'] * 100:.2f}%"
+        f" | Original ML ham score: "
+        f"{result['ml_ham_probability'] * 100:.2f}%"
+    )
 
     # --------------------------------------------------------
     # SAFETY INFORMATION
@@ -693,9 +706,12 @@ if result:
         st.markdown("**:material/info: Important Safety Note**")
 
         st.write(
-            "The spam score is an estimate produced by the trained "
-            "machine-learning model. It is not a verified fraud score "
-            "or a guarantee that a message is safe."
+            "SmartSMS combines machine-learning classification with "
+            "additional security screening. When a suspicious request "
+            "for a PIN, password or OTP is detected, the system assigns "
+            "a high-risk indicator even if the machine-learning model "
+            "returns a low spam score. The system risk indicator is not "
+            "a statistically verified probability of fraud."
         )
 
 
