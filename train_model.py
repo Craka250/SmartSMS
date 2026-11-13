@@ -17,9 +17,7 @@ from sklearn.metrics import (
     ConfusionMatrixDisplay
 )
 
-# ==========================================
 # 1. PROJECT CONFIGURATION
-# ==========================================
 
 DATASET_PATH = Path("data/sms+spam+collection/SMSSpamCollection")
 
@@ -29,9 +27,7 @@ print("=" * 60)
 print("             SMARTSMS MODEL TRAINING")
 print("=" * 60)
 
-# ==========================================
 # 2. VERIFY DATASET RECORDS
-# ==========================================
 
 with open(DATASET_PATH, "r", encoding="latin-1", newline="") as file:
     csv_records = list(csv.reader(file, delimiter="\t"))
@@ -41,9 +37,7 @@ print("-" * 45)
 
 print("Logical records found by CSV reader:", len(csv_records))
 
-# ==========================================
 # 3. LOAD AND PREPARE DATA
-# ==========================================
 
 df = pd.read_csv(
     DATASET_PATH,
@@ -85,9 +79,7 @@ print("Duplicates removed:", 5572 - len(df))
 print("\nClass distribution after preparation:")
 print(df["label"].value_counts())
 
-# ==========================================
 # 4. SEPARATE FEATURES AND TARGET
-# ==========================================
 
 X = df["message"]
 y = df["label"]
@@ -95,9 +87,7 @@ y = df["label"]
 # X = SMS messages
 # y = their correct categories (ham or spam)
 
-# ==========================================
 # 5. SPLIT TRAINING AND TESTING DATA
-# ==========================================
 
 X_train, X_test, y_train, y_test = train_test_split(
     X,
@@ -113,9 +103,7 @@ print("-" * 45)
 print("Training messages:", len(X_train))
 print("Testing messages:", len(X_test))
 
-# ==========================================
 # 6. BUILD MACHINE-LEARNING PIPELINE
-# ==========================================
 
 model = Pipeline([
     (
@@ -133,9 +121,7 @@ model = Pipeline([
     )
 ])
 
-# ==========================================
 # 7. TRAIN THE MODEL
-# ==========================================
 
 print("\n4. MODEL TRAINING")
 print("-" * 45)
@@ -146,15 +132,11 @@ model.fit(X_train, y_train)
 
 print("MODEL TRAINING COMPLETED SUCCESSFULLY!")
 
-# ==========================================
 # 8. MAKE TEST PREDICTIONS
-# ==========================================
 
 y_pred = model.predict(X_test)
 
-# ==========================================
 # 9. EVALUATE MODEL PERFORMANCE
-# ==========================================
 
 print("\n5. MODEL EVALUATION")
 print("-" * 45)
@@ -175,9 +157,7 @@ print(
     )
 )
 
-# ==========================================
 # 10. CONFUSION MATRIX
-# ==========================================
 
 cm = confusion_matrix(
     y_test,
@@ -207,9 +187,7 @@ print("\nConfusion matrix saved as confusion_matrix.png")
 
 plt.show()
 
-# ==========================================
 # 11. SAVE TRAINED MODEL
-# ==========================================
 
 joblib.dump(model, MODEL_PATH)
 
@@ -218,9 +196,7 @@ print("-" * 45)
 
 print("Saved model:", MODEL_PATH)
 
-# ==========================================
 # 12. COMPLETION
-# ==========================================
 
 print("\n" + "=" * 60)
 print("       SMARTSMS TRAINING COMPLETED!")

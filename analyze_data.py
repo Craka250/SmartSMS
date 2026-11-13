@@ -3,9 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-# -----------------------------------------
 # 1. PROJECT CONFIGURATION
-# -----------------------------------------
 
 DATASET_PATH = Path("data/sms+spam+collection/SMSSpamCollection")
 
@@ -13,9 +11,7 @@ print("=" * 55)
 print("             SMARTSMS DATASET ANALYSIS")
 print("=" * 55)
 
-# -----------------------------------------
 # 2. LOAD THE DATASET
-# -----------------------------------------
 
 df = pd.read_csv(
     DATASET_PATH,
@@ -27,9 +23,7 @@ df = pd.read_csv(
 
 print("\nDATASET LOADED SUCCESSFULLY!")
 
-# -----------------------------------------
 # 3. BASIC DATASET INFORMATION
-# -----------------------------------------
 
 print("\n1. DATASET OVERVIEW")
 print("-" * 40)
@@ -38,9 +32,7 @@ print("Total messages:", len(df))
 print("Number of columns:", len(df.columns))
 print("Column names:", list(df.columns))
 
-# -----------------------------------------
 # 4. CLASS DISTRIBUTION
-# -----------------------------------------
 
 print("\n2. MESSAGE CLASS DISTRIBUTION")
 print("-" * 40)
@@ -60,9 +52,7 @@ for category, count in class_counts.items():
         f"({percentage:.2f}%)"
     )
 
-# -----------------------------------------
 # 5. CHECK DATA QUALITY
-# -----------------------------------------
 
 print("\n3. DATA QUALITY CHECK")
 print("-" * 40)
@@ -74,9 +64,7 @@ print("\nDuplicate messages:", df.duplicated().sum())
 
 print("\nUnique labels:", df["label"].unique())
 
-# -----------------------------------------
 # 6. DISPLAY SAMPLE MESSAGES
-# -----------------------------------------
 
 print("\n4. SAMPLE LEGITIMATE MESSAGES")
 print("-" * 40)
@@ -90,9 +78,7 @@ print("-" * 40)
 for message in df[df["label"] == "spam"]["message"].head(3):
     print("-", message)
 
-# -----------------------------------------
 # 7. VISUALIZE THE DATASET
-# -----------------------------------------
 
 plt.figure(figsize=(8, 5))
 

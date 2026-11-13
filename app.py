@@ -5,10 +5,7 @@ from pathlib import Path
 import joblib
 import streamlit as st
 
-
-# ============================================================
 # 1. APPLICATION CONFIGURATION
-# ============================================================
 
 st.set_page_config(
     page_title="SmartSMS | Spam Detector",
@@ -21,10 +18,7 @@ MODEL_PATH = Path(__file__).resolve().parent / "sms_spam_model.pkl"
 
 DEFAULT_SPAM_THRESHOLD = 0.50
 
-
-# ============================================================
 # 2. SECURITY RULES: SENSITIVE CREDENTIAL REQUESTS
-# ============================================================
 
 CREDENTIAL_REQUEST_PATTERNS = [
     (
@@ -61,7 +55,6 @@ CREDENTIAL_REQUEST_PATTERNS = [
     )
 ]
 
-
 PROTECTIVE_WARNING_PATTERN = re.compile(
     r"\b(never|don't|do\s+not|shouldn't|should\s+not|"
     r"must\s+not|cannot|can't|avoid)\b"
@@ -70,7 +63,6 @@ PROTECTIVE_WARNING_PATTERN = re.compile(
     r"security\s+code|cvv)\b",
     re.IGNORECASE
 )
-
 
 def detect_credential_risk(message):
     """
@@ -97,10 +89,7 @@ def detect_credential_risk(message):
 
     return None
 
-
-# ============================================================
 # 3. APPLICATION DESIGN
-# ============================================================
 
 st.markdown(
     """
@@ -367,10 +356,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-# ============================================================
 # 4. LOAD THE TRAINED MACHINE-LEARNING MODEL
-# ============================================================
 
 @st.cache_resource
 def load_model():
@@ -428,10 +414,7 @@ def load_model():
 
     return model, threshold, metrics
 
-
-# ============================================================
 # 5. CHECK MODEL AVAILABILITY
-# ============================================================
 
 if not MODEL_PATH.exists():
 
@@ -441,7 +424,6 @@ if not MODEL_PATH.exists():
     )
 
     st.stop()
-
 
 try:
 
@@ -460,10 +442,7 @@ except Exception as error:
 
     st.stop()
 
-
-# ============================================================
 # 6. SESSION STATE AND CALLBACKS
-# ============================================================
 
 if "sms_input" not in st.session_state:
     st.session_state.sms_input = ""
@@ -477,7 +456,6 @@ if "sample_selection" not in st.session_state:
 if "last_sample_selection" not in st.session_state:
     st.session_state.last_sample_selection = "Choose a sample message"
 
-
 def clear_message():
     """Clear the input and previous analysis."""
 
@@ -489,10 +467,7 @@ def clear_message():
 
     st.session_state.last_sample_selection = "Choose a sample message"
 
-
-# ============================================================
 # 7. APPLICATION HERO HEADER
-# ============================================================
 
 st.markdown(
     """
@@ -515,10 +490,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-# ============================================================
 # 8. SIDEBAR: SAFETY INFORMATION
-# ============================================================
 
 with st.sidebar:
 
@@ -546,9 +518,7 @@ with st.sidebar:
             "also raise a high-risk warning."
         )
 
-# ============================================================
 # 9. SMS INPUT SECTION
-# ============================================================
 
 st.divider()
 
@@ -558,10 +528,7 @@ st.write(
     "Paste a text message or choose an example to get a safety check."
 )
 
-
-# ============================================================
 # 10. SAMPLE SMS MESSAGES
-# ============================================================
 
 EXAMPLES = {
 
@@ -599,13 +566,11 @@ EXAMPLES = {
     )
 }
 
-
 selected_example = st.selectbox(
     "Try a sample message",
     options=list(EXAMPLES.keys()),
     key="sample_selection"
 )
-
 
 # Update the input when a different sample is selected.
 
@@ -616,7 +581,6 @@ if selected_example != st.session_state.last_sample_selection:
     st.session_state.analysis_result = None
 
     st.session_state.last_sample_selection = selected_example
-
 
 message = st.text_area(
     "Message text",
@@ -629,13 +593,9 @@ message = st.text_area(
 
 st.caption(f"{len(message)} / 5,000 characters")
 
-
-# ============================================================
 # 11. ACTION BUTTONS
-# ============================================================
 
 analyze_column, clear_column = st.columns([3, 1])
-
 
 with analyze_column:
 
@@ -645,7 +605,6 @@ with analyze_column:
         type="primary"
     )
 
-
 with clear_column:
 
     st.button(
@@ -654,10 +613,7 @@ with clear_column:
         on_click=clear_message
     )
 
-
-# ============================================================
 # 12. CLASSIFY THE SMS MESSAGE
-# ============================================================
 
 if analyze_clicked:
 
@@ -755,10 +711,7 @@ if analyze_clicked:
 
             st.caption(f"Technical detail: {error}")
 
-
-# ============================================================
 # 13. DISPLAY ANALYSIS RESULTS
-# ============================================================
 
 result = st.session_state.analysis_result
 
@@ -775,10 +728,7 @@ if result:
 
     detection_method = result["detection_method"]
 
-
-    # --------------------------------------------------------
     # HIGH-RISK CREDENTIAL REQUEST
-    # --------------------------------------------------------
 
     if security_warning:
 
@@ -802,10 +752,7 @@ if result:
             "or OTP to someone through an SMS or message."
         )
 
-
-    # --------------------------------------------------------
     # POTENTIAL SPAM
-    # --------------------------------------------------------
 
     elif prediction == "spam":
 
@@ -824,10 +771,7 @@ if result:
             "information or opening links in this message."
         )
 
-
-    # --------------------------------------------------------
     # LEGITIMATE MESSAGE
-    # --------------------------------------------------------
 
     else:
 
@@ -847,9 +791,7 @@ if result:
             "the sender is genuine or that the message is safe."
         )
 
-    # --------------------------------------------------------
     # SYSTEM RISK ASSESSMENT
-    # --------------------------------------------------------
 
     st.markdown("### :material/bar_chart: Risk assessment")
 
@@ -893,9 +835,7 @@ if result:
             f"{result['ml_ham_probability'] * 100:.2f}%"
         )
 
-    # --------------------------------------------------------
     # SAFETY INFORMATION
-    # --------------------------------------------------------
 
     with st.container(border=True):
 
@@ -909,10 +849,7 @@ if result:
             "probability of fraud."
         )
 
-
-# ============================================================
 # 14. PROJECT FOOTER
-# ============================================================
 
 st.divider()
 
